@@ -2,12 +2,14 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import TeamGrid from '../components/TeamGrid.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
-import { getBaseUrl } from '../utils/urls';
 
 const authors = await getCollection('authors');
-const baseUrl = getBaseUrl();
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 2);
 ---
 
 <!doctype html>
@@ -28,7 +30,7 @@ const baseUrl = getBaseUrl();
 				margin-bottom: 4rem;
 			}
 			.logo {
-				width: 200px;
+				width: 400px;
 				height: auto;
 				margin-bottom: 1.5rem;
 			}
@@ -47,67 +49,50 @@ const baseUrl = getBaseUrl();
 				max-width: 600px;
 				margin: 0 auto;
 			}
-			.team-section {
+			.blog-section, .team-section {
 				margin-top: 4rem;
 			}
-			.team-section h2 {
+			.blog-section h2, .team-section h2 {
 				font-size: 2rem;
 				text-align: center;
 				margin-bottom: 2rem;
 				color: rgb(var(--black));
 			}
-			.team-grid {
-				list-style: none;
-				padding: 0;
+			.blog-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 2rem;
-				margin: 0;
+				margin: 0 auto;
+				max-width: 800px;
 			}
-			.team-member {
-				display: flex;
-				justify-content: center;
-			}
-			.member-link {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				text-align: center;
-				padding: 1.5rem;
+			.blog-card {
+				border: 1px solid rgb(var(--gray-light));
 				border-radius: 12px;
+				padding: 1.5rem;
+				transition: box-shadow 0.2s ease;
 				background: white;
-				border: 1px solid color-mix(in srgb, var(--accent) 10%, transparent);
-				transition: all 0.3s ease;
+			}
+			.blog-card:hover {
+				box-shadow: var(--box-shadow);
+			}
+			.blog-link {
 				text-decoration: none;
 				color: inherit;
-				width: 100%;
-				max-width: 200px;
+				display: block;
 			}
-			.member-link:hover {
-				transform: translateY(-4px);
-				box-shadow: 0 8px 25px color-mix(in srgb, var(--accent) 15%, transparent);
-				border-color: color-mix(in srgb, var(--accent) 90%, transparent);
-				text-decoration: none;
-				color: inherit;
-			}
-			.member-avatar {
-				width: 100px;
-				height: 100px;
-				border-radius: 50%;
-				overflow: hidden;
-				margin-bottom: 1rem;
-				border: 3px solid color-mix(in srgb, var(--accent) 50%, transparent);
-			}
-			.member-avatar img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
-			.member-name {
-				font-size: 1.1rem;
-				font-weight: 600;
-				margin: 0;
+			.blog-card h3 {
+				margin: 0 0 0.5rem 0;
 				color: rgb(var(--black));
+				font-size: 1.25rem;
+			}
+			.blog-description {
+				margin: 0 0 1rem 0;
+				color: rgb(var(--gray-dark));
+				line-height: 1.5;
+			}
+			.blog-date {
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
 			}
 			@media (max-width: 720px) {
 				main {
@@ -122,17 +107,6 @@ const baseUrl = getBaseUrl();
 				.tagline {
 					font-size: 1.1rem;
 				}
-				.team-grid {
-					grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-					gap: 1.5rem;
-				}
-				.member-link {
-					padding: 1rem;
-				}
-				.member-avatar {
-					width: 80px;
-					height: 80px;
-				}
 			}
 		</style>
 	</head>
@@ -143,27 +117,31 @@ const baseUrl = getBaseUrl();
 				<img src="/magentalab.png" alt="Magenta Lab" class="logo" />
 				<h1>Magenta Lab</h1>
 				<p class="tagline">
-					A research group at the intersection of AI safety, security, and trustworthiness.
+					Welcome! We are a research group at the intersection of AI safety, security, and trustworthiness. 
+					We aim to make AI safety both practical and accessible. 
+					Practical in the sense that you can implement it today, 
+					and accessible in the sense that our tools are open source and free from vendor lock-in.
 				</p>
 			</section>
 
+			<section class="blog-section">
+				<h2>Latest Posts</h2>
+				<div class="blog-grid">
+					{posts.map((post) => (
+						<article class="blog-card">
+							<a href={`/blog/${post.slug}/`} class="blog-link">
+								<h3>{post.data.title}</h3>
+								<p class="blog-description">{post.data.description}</p>
+								<time class="blog-date">{post.data.pubDate.toLocaleDateString()}</time>
+							</a>
+						</article>
+					))}
+				</div>
+			</section>
+
 			<section class="team-section">
-				<ul class="team-grid">
-					{
-						authors.map((author) => (
-							<li class="team-member">
-								<a href={`${baseUrl}/authors/${author.id}/`} class="member-link">
-									{author.data.avatar && (
-										<div class="member-avatar">
-											<img src={author.data.avatar} alt={author.data.name} />
-										</div>
-									)}
-									<h3 class="member-name">{author.data.name}</h3>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+				<h2>Our Team</h2>
+				<TeamGrid authors={authors} />
 			</section>
 		</main>
 		<Footer />
