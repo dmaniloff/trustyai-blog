@@ -40,7 +40,7 @@ const authorPosts = allPosts.filter(post =>
 				<div class="author-header">
 					{author.data.avatar && (
 						<img
-							src={author.data.avatar}
+							src={author.data.avatar.startsWith('/') ? `${baseUrl}${author.data.avatar}` : author.data.avatar}
 							alt={author.data.name}
 							class="author-avatar-large"
 						/>

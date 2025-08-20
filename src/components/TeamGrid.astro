@@ -18,7 +18,7 @@ const baseUrl = getBaseUrl();
 					<a href={`${baseUrl}/authors/${author.id}/`} class="author-link">
 						{author.data.avatar && (
 							<img
-								src={author.data.avatar}
+								src={author.data.avatar.startsWith('/') ? `${baseUrl}${author.data.avatar}` : author.data.avatar}
 								alt={author.data.name}
 								class="author-avatar"
 							/>
