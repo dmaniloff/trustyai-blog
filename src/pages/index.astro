@@ -4,13 +4,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
 import { getBaseUrl } from '../utils/urls';
 
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const authors = await getCollection('authors');
+const baseUrl = getBaseUrl();
 ---
 
 <!doctype html>
@@ -18,112 +15,123 @@ const posts = (await getCollection('blog')).sort(
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
+			body {
+				background: #fafafa;
+			}
 			main {
-				width: 960px;
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 3rem 2rem;
 			}
-			.posts-section {
-				margin-bottom: 3rem;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-				position: relative;
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
+			.hero-section {
 				text-align: center;
+				margin-bottom: 4rem;
 			}
-			ul li:first-child img {
-				width: 100%;
+			.logo {
+				width: 200px;
+				height: auto;
+				margin-bottom: 1.5rem;
 			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
+			h1 {
+				font-size: 2.5rem;
+				margin: 0 0 1rem 0;
+				color: rgb(var(--black));
+				font-weight: 600;
 			}
-			ul li img {
-				margin-bottom: 0.5rem;
+			.tagline {
+				font-size: 1.25rem;
+				color: #6b7280;
+				line-height: 1.6;
+				font-weight: 400;
+				margin: 0;
+				max-width: 600px;
+				margin: 0 auto;
+			}
+			.team-section {
+				margin-top: 4rem;
+			}
+			.team-section h2 {
+				font-size: 2rem;
+				text-align: center;
+				margin-bottom: 2rem;
+				color: rgb(var(--black));
+			}
+			.team-grid {
+				list-style: none;
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+				gap: 2rem;
+				margin: 0;
+			}
+			.team-member {
+				display: flex;
+				justify-content: center;
+			}
+			.member-link {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				text-align: center;
+				padding: 1.5rem;
 				border-radius: 12px;
+				background: white;
+				border: 1px solid color-mix(in srgb, var(--accent) 10%, transparent);
+				transition: all 0.3s ease;
+				text-decoration: none;
+				color: inherit;
+				width: 100%;
+				max-width: 200px;
 			}
-			ul li a {
-				display: block;
+			.member-link:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 8px 25px color-mix(in srgb, var(--accent) 15%, transparent);
+				border-color: color-mix(in srgb, var(--accent) 90%, transparent);
+				text-decoration: none;
+				color: inherit;
 			}
-			.title {
+			.member-avatar {
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin-bottom: 1rem;
+				border: 3px solid color-mix(in srgb, var(--accent) 50%, transparent);
+			}
+			.member-avatar img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+			.member-name {
+				font-size: 1.1rem;
+				font-weight: 600;
 				margin: 0;
 				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			.track-text {
-				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.9rem;
-				text-transform: capitalize;
-				opacity: 0.6;
-				margin-right: 0.5rem;
-			}
-			.track-text::after {
-				content: "•";
-				margin-left: 0.5rem;
-				opacity: 0.5;
-			}
-			.track-badge {
-				position: absolute;
-				top: 0.75rem;
-				right: 0.75rem;
-				background: rgb(var(--accent));
-				color: white;
-				padding: 0.25rem 0.75rem;
-				border-radius: 1rem;
-				font-size: 0.75rem;
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: 0.05em;
-				z-index: 1;
-			}
-			.track-badge.research {
-				background: #3b82f6;
-			}
-			.track-badge.engineering {
-				background: #10b981;
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
 			}
 			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
+				main {
+					padding: 2rem 1rem;
 				}
-				ul li {
-					width: 100%;
-					text-align: center;
+				.logo {
+					width: 150px;
 				}
-				ul li:first-child {
-					margin-bottom: 0;
+				h1 {
+					font-size: 2rem;
 				}
-				ul li:first-child .title {
-					font-size: 1.563em;
+				.tagline {
+					font-size: 1.1rem;
 				}
-				.track-badge {
-					top: 0.5rem;
-					right: 0.5rem;
+				.team-grid {
+					grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+					gap: 1.5rem;
+				}
+				.member-link {
+					padding: 1rem;
+				}
+				.member-avatar {
+					width: 80px;
+					height: 80px;
 				}
 			}
 		</style>
@@ -131,21 +139,26 @@ const posts = (await getCollection('blog')).sort(
 	<body>
 		<Header />
 		<main>
-			<section class="posts-section">
-				<ul>
+			<section class="hero-section">
+				<img src="/magentalab.png" alt="Magenta Lab" class="logo" />
+				<h1>Magenta Lab</h1>
+				<p class="tagline">
+					A research group at the intersection of AI safety, security, and trustworthiness.
+				</p>
+			</section>
+
+			<section class="team-section">
+				<ul class="team-grid">
 					{
-						posts.map((post) => (
-							<li>
-								<span class={`track-badge ${post.data.track}`}>
-									{post.data.track}
-								</span>
-								<a href={post.id}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<span class="track-text">{post.data.track}</span>
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+						authors.map((author) => (
+							<li class="team-member">
+								<a href={`${baseUrl}/authors/${author.id}/`} class="member-link">
+									{author.data.avatar && (
+										<div class="member-avatar">
+											<img src={author.data.avatar} alt={author.data.name} />
+										</div>
+									)}
+									<h3 class="member-name">{author.data.name}</h3>
 								</a>
 							</li>
 						))

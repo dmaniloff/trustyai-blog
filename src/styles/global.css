@@ -5,11 +5,11 @@
  */
 
 :root {
-	--accent: #1f2937;
-	--accent-dark: #111827;
+	--accent: #610a72;
+	--accent-dark: #44024f;
 	--black: 17, 24, 39;
 	--gray: 107, 114, 128;
-	--gray-light: 243, 244, 246;
+	--gray-light: 250, 249, 252;
 	--gray-dark: 55, 65, 81;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
 	--box-shadow:
@@ -21,8 +21,7 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
+	background: #fafafa;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));

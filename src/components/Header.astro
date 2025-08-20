@@ -8,10 +8,9 @@ const baseUrl = getBaseUrl();
 <header>
 	<nav>
 		<div class="site-branding">
-			<a href={`${baseUrl}`}>
-				<img src={`${baseUrl}/trustyai-logo.svg`} alt="TrustyAI Logo" class="logo" />
+			<a href={baseUrl || "/"}>
+				<img src={`${baseUrl}/magentalab.png`} alt={SITE_TITLE} class="logo" />
 			</a>
-			<h2><a href={`${baseUrl}`}>{SITE_TITLE}</a></h2>
 		</div>
 		<div class="internal-links">
 			<HeaderLink href={`${baseUrl}/research`}>Research</HeaderLink>
@@ -22,7 +21,7 @@ const baseUrl = getBaseUrl();
 		</div>
 		<div class="social-links">
 			<a href="https://fosstodon.org/@trustyai" target="_blank">
-				<span class="sr-only">Follow TrustyAI on Mastodon</span>
+				<span class="sr-only">Follow {SITE_TITLE} on Mastodon</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
 					><path
 						fill="currentColor"
@@ -31,7 +30,7 @@ const baseUrl = getBaseUrl();
 				>
 			</a>
 			<a href="https://github.com/trustyai-explainability" target="_blank">
-				<span class="sr-only">TrustyAI on GitHub</span>
+				<span class="sr-only">{SITE_TITLE} on GitHub</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
 					><path
 						fill="currentColor"
@@ -47,7 +46,7 @@ const baseUrl = getBaseUrl();
 		margin: 0;
 		padding: 0 1em;
 		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	}
 	
 	.site-branding {
@@ -57,7 +56,7 @@ const baseUrl = getBaseUrl();
 	}
 	
 	.logo {
-		height: 2.5rem;
+		height: 3rem;
 		width: auto;
 	}
 	
@@ -90,12 +89,8 @@ const baseUrl = getBaseUrl();
 		display: flex;
 	}
 	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-		
 		.logo {
-			height: 2rem;
+			height: 2.5rem;
 		}
 	}
 </style>
