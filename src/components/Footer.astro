@@ -1,12 +1,13 @@
 ---
+import { SITE_TITLE } from '../consts';
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} TrustyAI. All rights reserved.
+	&copy; {today.getFullYear()} {SITE_TITLE}. All rights reserved.
 	<div class="social-links">
 		<a href="https://fosstodon.org/@trustyai" target="_blank">
-			<span class="sr-only">Follow TrustyAI on Mastodon</span>
+			<span class="sr-only">Follow {SITE_TITLE} on Mastodon</span>
 			<svg
 				viewBox="0 0 16 16"
 				aria-hidden="true"
@@ -20,7 +21,7 @@ const today = new Date();
 			>
 		</a>
 		<a href="https://github.com/trustyai-explainability" target="_blank">
-			<span class="sr-only">Go to TrustyAI's GitHub organization</span>
+			<span class="sr-only">Go to {SITE_TITLE}'s GitHub organization</span>
 			<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github"
 				><path
 					fill="currentColor"

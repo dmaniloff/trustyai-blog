@@ -3,16 +3,14 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import SocialLinks from '../../components/SocialLinks.astro';
-import { getBaseUrl } from '../../utils/urls';
+import TeamGrid from '../../components/TeamGrid.astro';
 
 const authors = await getCollection('authors');
-const baseUrl = getBaseUrl();
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title="Authors" description="Meet the team behind TrustyAI Blog" />
+		<BaseHead title="Authors" description="Meet the team" />
 	</head>
 	<body>
 		<Header />
@@ -20,28 +18,7 @@ const baseUrl = getBaseUrl();
 			<section>
 				<h1>Our Authors</h1>
 				<p>Meet the authors behind our blog posts.</p>
-				<ul class="authors-grid">
-					{
-						authors.map((author) => (
-							<li class="author-card">
-								<div class="author-content">
-									<a href={`${baseUrl}/authors/${author.id}/`} class="author-link">
-										{author.data.avatar && (
-											<img
-												src={author.data.avatar}
-												alt={author.data.name}
-												class="author-avatar"
-											/>
-										)}
-										<h3>{author.data.name}</h3>
-										{author.data.bio && <p>{author.data.bio}</p>}
-									</a>
-									<SocialLinks author={author} size="small" />
-								</div>
-							</li>
-						))
-					}
-				</ul>
+				<TeamGrid authors={authors} />
 			</section>
 		</main>
 		<Footer />
@@ -60,50 +37,6 @@ const baseUrl = getBaseUrl();
 			h1 {
 				font-size: 2.5rem;
 				margin-bottom: 0.5rem;
-			}
-			.authors-grid {
-				list-style: none;
-				padding: 0;
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 2rem;
-				margin: 2rem 0;
-			}
-			.author-card {
-				border: 1px solid rgb(var(--gray-light));
-				border-radius: 12px;
-				padding: 1.5rem;
-				transition: box-shadow 0.2s ease;
-			}
-			.author-card:hover {
-				box-shadow: var(--box-shadow);
-			}
-			.author-content {
-				display: flex;
-				flex-direction: column;
-				height: 100%;
-			}
-			.author-link {
-				text-decoration: none;
-				color: inherit;
-				display: block;
-				flex: 1;
-			}
-			.author-avatar {
-				width: 80px;
-				height: 80px;
-				border-radius: 50%;
-				object-fit: cover;
-				margin-bottom: 1rem;
-			}
-			.author-card h3 {
-				margin: 0 0 0.5rem 0;
-				color: rgb(var(--black));
-			}
-			.author-card p {
-				margin: 0;
-				color: rgb(var(--gray-dark));
-				line-height: 1.5;
 			}
 		</style>
 	</body>

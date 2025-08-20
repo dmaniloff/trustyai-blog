@@ -2,15 +2,17 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import TeamGrid from '../components/TeamGrid.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getBaseUrl } from '../utils/urls';
 
 const baseUrl = getBaseUrl();
+const authors = await getCollection('authors');
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 2);
 ---
 
 <!doctype html>
@@ -18,112 +20,93 @@ const posts = (await getCollection('blog')).sort(
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
+			body {
+				background: #fafafa;
+			}
 			main {
-				width: 960px;
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 3rem 2rem;
 			}
-			.posts-section {
-				margin-bottom: 3rem;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-				position: relative;
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
+			.hero-section {
 				text-align: center;
+				margin-bottom: 4rem;
 			}
-			ul li:first-child img {
-				width: 100%;
+			.logo {
+				width: 400px;
+				height: auto;
+				margin-bottom: 1.5rem;
 			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
+			h1 {
+				font-size: 4rem;
+				margin: 0 0 1rem 0;
 			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
+			.tagline {
+				font-size: 1.25rem;
+				color: #6b7280;
+				line-height: 1.6;
+				font-weight: 400;
 				margin: 0;
+				max-width: 600px;
+				margin: 0 auto;
+			}
+			.blog-section, .team-section {
+				margin-top: 4rem;
+			}
+			.blog-section h2, .team-section h2 {
+				font-size: 2rem;
+				text-align: center;
+				margin-bottom: 2rem;
 				color: rgb(var(--black));
-				line-height: 1;
 			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
+			.blog-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 2rem;
+				margin: 0 auto;
+				max-width: 800px;
 			}
-			.track-text {
-				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.9rem;
-				text-transform: capitalize;
-				opacity: 0.6;
-				margin-right: 0.5rem;
+			.blog-card {
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 12px;
+				padding: 1.5rem;
+				transition: box-shadow 0.2s ease;
+				background: white;
 			}
-			.track-text::after {
-				content: "•";
-				margin-left: 0.5rem;
-				opacity: 0.5;
-			}
-			.track-badge {
-				position: absolute;
-				top: 0.75rem;
-				right: 0.75rem;
-				background: rgb(var(--accent));
-				color: white;
-				padding: 0.25rem 0.75rem;
-				border-radius: 1rem;
-				font-size: 0.75rem;
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: 0.05em;
-				z-index: 1;
-			}
-			.track-badge.research {
-				background: #3b82f6;
-			}
-			.track-badge.engineering {
-				background: #10b981;
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
+			.blog-card:hover {
 				box-shadow: var(--box-shadow);
 			}
+			.blog-link {
+				text-decoration: none;
+				color: inherit;
+				display: block;
+			}
+			.blog-card h3 {
+				margin: 0 0 0.5rem 0;
+				color: rgb(var(--black));
+				font-size: 1.25rem;
+			}
+			.blog-description {
+				margin: 0 0 1rem 0;
+				color: rgb(var(--gray-dark));
+				line-height: 1.5;
+			}
+			.blog-date {
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
+			}
 			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
+				main {
+					padding: 2rem 1rem;
 				}
-				ul li {
-					width: 100%;
-					text-align: center;
+				.logo {
+					width: 150px;
 				}
-				ul li:first-child {
-					margin-bottom: 0;
+				h1 {
+					font-size: 2rem;
 				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-				.track-badge {
-					top: 0.5rem;
-					right: 0.5rem;
+				.tagline {
+					font-size: 1.1rem;
 				}
 			}
 		</style>
@@ -131,27 +114,38 @@ const posts = (await getCollection('blog')).sort(
 	<body>
 		<Header />
 		<main>
-			<section class="posts-section">
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<span class={`track-badge ${post.data.track}`}>
-									{post.data.track}
-								</span>
-								<a href={post.id}>
-									<img width={720} height={360} src={post.data.heroImage?.startsWith('/') ? `${baseUrl}${post.data.heroImage}` : post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<span class="track-text">{post.data.track}</span>
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+      
+			<section class="hero-section">
+				<img src="/magentalab.png" alt="Magenta Lab" class="logo" />
+				<h1>magentalab</h1>
+				<p class="tagline">
+					Welcome! We are a research group at the intersection of AI safety, security, and trustworthiness. 
+					We aim to make AI safety both practical and accessible. 
+					Practical in the sense that you can implement it today, 
+					and accessible in the sense that our tools are open source and free from vendor lock-in.
+				</p>
 			</section>
+
+			<section class="blog-section">
+				<h2>Latest Posts</h2>
+				<div class="blog-grid">
+					{posts.map((post) => (
+						<article class="blog-card">
+							<a href={post.id} class="blog-link">
+								<h3>{post.data.title}</h3>
+								<p class="blog-description">{post.data.description}</p>
+								<time class="blog-date">{post.data.pubDate.toLocaleDateString()}</time>
+							</a>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section class="team-section">
+				<h2>Our Team</h2>
+				<TeamGrid authors={authors} />
+			</section>
+      
 		</main>
 		<Footer />
 	</body>

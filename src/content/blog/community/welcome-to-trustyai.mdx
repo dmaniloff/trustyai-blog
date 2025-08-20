@@ -8,6 +8,9 @@ track: "community"
 ---
 
 import TeamGrid from '../../../components/TeamGrid.astro';
+import { getCollection } from 'astro:content';
+
+export const authors = await getCollection('authors');
 
 Hello and welcome to the TrustyAI blog! We're excited to launch it and share our journey toward creating trustworthy artificial intelligence.
 
@@ -46,53 +49,7 @@ We envision a future in which trustworthy AI development becomes inherently coll
 
 ## **Meet The Team**
 
-<TeamGrid members={[
-	{
-		name: "Christina Xu",
-		avatar: "/authors/christina-xu.jpg",
-		slug: "christina-xu"
-	},
-	{
-		name: "Diego",
-		avatar: "/authors/diego.jpg",
-		slug: "diego"
-	},
-	{
-		name: "Evaline",
-		avatar: "/authors/evaline.JPG",
-		slug: "evaline"
-	},
-	{
-		name: "Mac Misiura",
-		avatar: "/authors/mac.jpg",
-		slug: "mac"
-	},
-	{
-		name: "Rob Geada",
-		avatar: "/authors/rob-geada.jpg",
-		slug: "rob-geada"
-	},
-	{
-		name: "Rui Vieira",
-		avatar: "/authors/rui-vieira.jpg",
-		slug: "rui-vieira"
-	},
-	{
-		name: "Sai Chandra Pandraju",
-		avatar: "/authors/sai-chandra.jpg",
-		slug: "sai-chandra"
-	},
-	{
-		name: "Amber Blue",
-		avatar: "/authors/amber.jpg",
-		slug: "amber-blue"
-	},
-    {
-		name: "Karishma Punwatkar",
-		avatar: "/authors/karishma.jpg",
-		slug: "karishma-punwatkar"
-	}
-]} />
+<TeamGrid authors={authors} />
 
 ## **Join Our Journey**
 
