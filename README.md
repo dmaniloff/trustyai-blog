@@ -34,6 +34,22 @@ The site automatically deploys to GitHub Pages when you push to the `main` branc
 
 **Live site**: https://dmaniloff.github.io/trustyai-blog/
 
+### Pull Request Previews
+
+Pull requests to `main` automatically generate preview builds using GitHub Artifacts.
+
+**How it works**:
+1. Open a PR to `main` branch
+2. Wait for the build to complete
+3. Download the preview artifact from the Actions tab
+4. Extract and serve locally: `npx serve extracted-folder`
+
+**Alternative options**:
+- **Netlify Preview**: Available in `PR_PREVIEW_SETUP.md` (requires setup)
+- **GitHub Artifacts**: Currently active (no setup required)
+
+See `PR_PREVIEW_SETUP.md` for detailed setup instructions and switching between options.
+
 ## Adding Posts
 
 Create new `.md` files in `src/content/blog/` with frontmatter:
