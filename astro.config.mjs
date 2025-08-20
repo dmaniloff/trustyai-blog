@@ -6,18 +6,23 @@ import { visit } from 'unist-util-visit';
 
 // Site configuration for GitHub Pages
 const siteUrl = 'https://dmaniloff.github.io';
-const basePath = '/trustyai-blog'; // GitHub Pages subdirectory deployment
+// Only use base path for GitHub Pages deployment, not for local development
+const basePath = process.env.GITHUB_PAGES === 'true' ? '/trustyai-blog' : '';
 
 console.log('Build environment:', {
 	site: siteUrl,
 	base: basePath || '(root path)',
-	NODE_ENV: process.env.NODE_ENV
+	NODE_ENV: process.env.NODE_ENV,
+	GITHUB_PAGES: process.env.GITHUB_PAGES
 });
 
 // Custom remark plugin to handle base URL for images in markdown content
 function remarkBaseUrl() {
 	// @ts-ignore
 	return (tree) => {
+		// Only transform URLs if we have a base path (i.e., for GitHub Pages)
+		if (!basePath) return;
+		
 		visit(tree, 'image', (node) => {
 			if (node.url && node.url.startsWith('/') && !node.url.startsWith(siteUrl)) {
 				console.log(`Transforming image URL: ${node.url} -> ${basePath}${node.url}`);
