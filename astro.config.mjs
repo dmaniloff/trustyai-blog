@@ -4,9 +4,9 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
 
-// Site configuration for https://blog.trustyai.org
-const siteUrl = 'https://blog.trustyai.org';
-const basePath = ''; // Empty for root path deployment
+// Site configuration for GitHub Pages
+const siteUrl = 'https://dmaniloff.github.io';
+const basePath = '/trustyai-blog'; // GitHub Pages subdirectory deployment
 
 console.log('Build environment:', {
 	site: siteUrl,
