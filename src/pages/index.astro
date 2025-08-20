@@ -35,10 +35,8 @@ const posts = (await getCollection('blog')).sort(
 				margin-bottom: 1.5rem;
 			}
 			h1 {
-				font-size: 2.5rem;
+				font-size: 4rem;
 				margin: 0 0 1rem 0;
-				color: rgb(var(--black));
-				font-weight: 600;
 			}
 			.tagline {
 				font-size: 1.25rem;
@@ -115,7 +113,7 @@ const posts = (await getCollection('blog')).sort(
 		<main>
 			<section class="hero-section">
 				<img src="/magentalab.png" alt="Magenta Lab" class="logo" />
-				<h1>Magenta Lab</h1>
+				<h1>magentalab</h1>
 				<p class="tagline">
 					Welcome! We are a research group at the intersection of AI safety, security, and trustworthiness. 
 					We aim to make AI safety both practical and accessible. 
@@ -129,7 +127,7 @@ const posts = (await getCollection('blog')).sort(
 				<div class="blog-grid">
 					{posts.map((post) => (
 						<article class="blog-card">
-							<a href={`/blog/${post.slug}/`} class="blog-link">
+							<a href={post.id} class="blog-link">
 								<h3>{post.data.title}</h3>
 								<p class="blog-description">{post.data.description}</p>
 								<time class="blog-date">{post.data.pubDate.toLocaleDateString()}</time>

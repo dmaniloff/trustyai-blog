@@ -17,7 +17,7 @@ const baseUrl = getBaseUrl();
 			<HeaderLink href={`${baseUrl}/engineering`}>Engineering</HeaderLink>
 			<HeaderLink href={`${baseUrl}/community`}>Community</HeaderLink>
 			<HeaderLink href={`${baseUrl}/authors`}>Authors</HeaderLink>
-			<HeaderLink href="https://trustyai.org/docs/main/main" target="_blank">Documentation</HeaderLink>
+			<HeaderLink href="https://trustyai.org/docs/main/main" target="_blank">Docs</HeaderLink>
 		</div>
 		<div class="social-links">
 			<a href="https://fosstodon.org/@trustyai" target="_blank">
@@ -79,6 +79,11 @@ const baseUrl = getBaseUrl();
 		color: var(--black);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
+	}
+	.internal-links a {
+		font-family: "Bungee", sans-serif;
+		font-weight: 400;
+		font-size: 1rem;
 	}
 	nav a.active {
 		text-decoration: none;
