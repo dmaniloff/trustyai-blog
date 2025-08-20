@@ -1,6 +1,6 @@
 ---
 title: 'On Air-Bench 2024: A Discussion of Synthetically Generated Dialect' 
-description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
+description: 'Our take on the synthetically generated dialects in AIR-Bench 2024.'
 pubDate: 'Jul 21 2025'
 heroImage: '/blog-placeholder-3.jpg'
 track: 'community'
