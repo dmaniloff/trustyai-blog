@@ -2,7 +2,7 @@ name: Deploy Site
 
 on:
   push:
-    branches: [main]
+    branches: [main, magentalab]
 
 permissions:
   contents: read
