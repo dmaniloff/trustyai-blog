@@ -1,4 +1,6 @@
 ---
+import { getBaseUrl } from '../utils/urls';
+
 export interface Props {
 	name: string;
 	bio: string;
@@ -9,6 +11,7 @@ export interface Props {
 }
 
 const { name, bio, avatar, size = 'medium', showBio = true, href } = Astro.props;
+const baseUrl = getBaseUrl();
 
 const sizeClasses = {
 	small: 'author-card-small',
@@ -22,7 +25,7 @@ const sizeClasses = {
 		<a href={href} class="author-link">
 			{avatar && (
 				<img
-					src={avatar.startsWith('/') ? `https://blog.trustyai.org${avatar}` : avatar}
+					src={avatar.startsWith('/') ? `${baseUrl}${avatar}` : avatar}
 					alt={name}
 					class="author-avatar"
 				/>
@@ -36,7 +39,7 @@ const sizeClasses = {
 		<>
 			{avatar && (
 				<img
-					src={avatar.startsWith('/') ? `https://blog.trustyai.org${avatar}` : avatar}
+					src={avatar.startsWith('/') ? `${baseUrl}${avatar}` : avatar}
 					alt={name}
 					class="author-avatar"
 				/>
