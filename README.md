@@ -32,7 +32,7 @@ npm run preview
 
 The site automatically deploys to GitHub Pages when you push to the `main` branch.
 
-**Live site**: https://trustyai-explainability.github.io/trustyai-blog/
+**Live site**: https://dmaniloff.github.io/trustyai-blog/
 
 ## Adding Posts
 

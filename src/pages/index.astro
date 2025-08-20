@@ -5,7 +5,10 @@ import Footer from '../components/Footer.astro';
 import TeamGrid from '../components/TeamGrid.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getBaseUrl } from '../utils/urls';
 
+const baseUrl = getBaseUrl();
 const authors = await getCollection('authors');
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -111,6 +114,7 @@ const posts = (await getCollection('blog')).sort(
 	<body>
 		<Header />
 		<main>
+      
 			<section class="hero-section">
 				<img src="/magentalab.png" alt="Magenta Lab" class="logo" />
 				<h1>magentalab</h1>
@@ -141,6 +145,7 @@ const posts = (await getCollection('blog')).sort(
 				<h2>Our Team</h2>
 				<TeamGrid authors={authors} />
 			</section>
+      
 		</main>
 		<Footer />
 	</body>
