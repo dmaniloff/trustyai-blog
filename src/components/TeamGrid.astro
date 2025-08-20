@@ -23,7 +23,7 @@ const baseUrl = getBaseUrl();
 								class="author-avatar"
 							/>
 						)}
-						<h3>{author.data.name}</h3>
+						<h4>{author.data.name}</h4>
 						{author.data.bio && <p>{author.data.bio}</p>}
 					</a>
 					<SocialLinks author={author} size="small" />
@@ -69,7 +69,7 @@ const baseUrl = getBaseUrl();
 		object-fit: cover;
 		margin-bottom: 1rem;
 	}
-	.author-card h3 {
+	.author-card h4 {
 		margin: 0 0 0.5rem 0;
 		color: rgb(var(--black));
 	}
